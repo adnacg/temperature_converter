@@ -1,63 +1,54 @@
 // define each conversion in a function
-function FtoC(temp) {
-    return (temp - 32) * 1.8;
-}
-function FtoK(temp) {
-    return ((temp - 32) * 5/9) + 273.15;
-}
-function CtoF(temp) {
-    return (temp / 1.8) + 32;
-}
-function CtoK(temp) {
-    return temp + 273.15;
-}
-function KtoC(temp) {
-    return temp - 273.15;
-}
-function KtoF(temp) {
-    return (temp - 273.15) * 1.8 + 32;
-}
-
 function convert(temp, unit) {
-    // Use object key-value to store and access the user-submitted and converted temperatures.
-    var temperaturesList = {};
+
+    var resultString = "";
+
+    var celsius = "";
+    var kelvin = "";
+    var fahrenheit = "";
 
     if (unit === "Fahrenheit") {
-        temperaturesList[unit] = temp;
-        temperaturesList["Celsius"] = FtoC(temp);
-        temperaturesList["Kelvin"] = FtoK(temp);
+        resultString += temp.toFixed(2) + " Fahrenheit"
+        celsius = (temp - 32) * 1.8;
+        resultString += " is " + celsius.toFixed(2) + " Celsius"
+        kelvin = ((temp - 32) * 5/9) + 273.15;
+        resultString += " or " + kelvin.toFixed(2) + " Kelvin"
     } else if (unit === "Celsius") {
-        temperaturesList[unit] = temp;
-        temperaturesList["Kelvin"] = CtoK(temp);
-        temperaturesList["Fahrenheit"] = CtoF(temp);
+        resultString += temp.toFixed(2) + " Celsius"
+        fahrenheit = (temp / 1.8) + 32;
+        resultString += " is " + fahrenheit.toFixed(2) + " Fahrenheit"
+        kelvin = temp + 273.15;
+        resultString += " or " + kelvin.toFixed(2) + " Kelvin"
     } else if (unit === "Kelvin") {
-        temperaturesList[unit] = temp;
-        temperaturesList["Celsius"] = KtoC(temp);
-        temperaturesList["Fahrenheit"] = KtoF(temp);
+        resultString += temp.toFixed(2) + " Kelvin"
+        fahrenheit = (temp - 273.15) * 1.8 + 32;
+        resultString += " is " + fahrenheit.toFixed(2) + " Fahrenheit"
+        celsius = temp - 273.15;
+        resultString += " or " + celsius.toFixed(2) + " Celsius"
     } else {
         alert("Invalid Unit!");
         return;
     }
-    return temperaturesList;
+    return resultString;
 }
 
-// Use a for or while loop to print out the conversion results for each temperature.
 do {
     // Prompt the user for a starting temperature. This should be a numerical value that represents degrees.
     var temperatureInput = parseFloat(prompt("Enter a temperature"));
-    // Prompt the user for a starting temperatureUnit. This will represent either Fahrenheit, Celsius, or Kelvin.
+    // // Prompt the user for a starting temperatureUnit. This will represent either Fahrenheit, Celsius, or Kelvin.
     var temperatureUnit = prompt("Enter a temperature unit in Fahrenheit, Celsius, or Kelvin");
+
+    // Use an array to store and access the user-submitted and converted temperatures. Your array will end up looking something like this...
+    // var temps = [ STARTING_TEMP, CONVERTED_TEMP_1, CONVERTED_TEMP_2 ];
 
     var temperatures = convert(temperatureInput, temperatureUnit);
 
-    var keys = Object.keys(temperatures);
-
     if (temperatures) {
-        alert(temperatures[keys[0]].toFixed(2) + " " + keys[0] + " is " + temperatures[keys[1]].toFixed(2) + " " + keys[1] + " or " + temperatures[keys[2]].toFixed(2) + " " + keys[2] + ".");
+        alert(temperatures);
     }
 
-// Using loops, create an interface that continues to ask the user for temp conversions until the user requests to stop.
-} while (confirm("Continue to convert?"));
+} while (prompt("Continue? Input Y for Yes or N for No.") === "Y");
+
 
 
 
